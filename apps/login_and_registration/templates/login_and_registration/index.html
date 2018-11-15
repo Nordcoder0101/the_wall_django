@@ -1,0 +1,40 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login And Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div>
+    {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+  </div>
+
+  <div class = "new_user">
+    
+    <form action="/register_account" method="POST">
+    {% csrf_token %}
+      <p>First name: <input type="text" name="first_name" placeholder="First Name"></p>
+      <p>Last name: <input type="text" name="last_name" placeholder="Last Name"></p>
+      <p>Email: <input type="text" name="email" placeholder="you@sample.com"></p>
+      <p>Password: <input type="text" name="password" placeholder="Min 8 Chars"></p>
+      <p>Verify Password: <input type="text" name="vpassword" placeholder="Min 8 Character"></p>
+      <input type="submit" value="Create Account">
+    </form>
+  </div> 
+  <div class="login">
+    <form action="/login" method="POST">
+    {% csrf_token %}
+      <p>Email: <input type="text" name="email" placeholder="you@sample.com"></p>
+      <p>Password: <input type="text" name="password" placeholder="Min 8 Chars"></p>
+      <input type="submit" value="Login">
+    </form>  
+  </div>  
+</body>
+</html>
