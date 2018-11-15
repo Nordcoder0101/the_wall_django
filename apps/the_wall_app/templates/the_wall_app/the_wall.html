@@ -1,0 +1,37 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>The Wall</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <header>
+    <h2> CodingDojo Wall </h2>
+    <span> Welcome {{current_user.first_name}} </span>
+    <a href="/wall/logout">log off</a>
+  </header>
+  <h3>Post a message</h3>
+  <form method="POST" action="/wall/post_message">
+  {% csrf_token %}
+    <textarea name="message_text" rows="8" cols="50"></textarea>
+    <input type="hidden" name="***ID OF POSTER***">
+    <input type="submit" value="Post Message">
+  </form>
+{% for m in all_messages %}
+  <h3>{{m.created_by.first_name}} - {{m.created_by.created_on}}</h3>
+  <p>{{m.content}}</p>
+  {% for c in m.comments.all %}
+    <h3>{{c.created_by.first_name}} -  {{c.created_by.created_on}}</h3>
+    <p>{{c.content}}</p>
+  {% endfor %} 
+  <h3>Post a comment<h3>
+  <form method="POST" action="/wall/post_comment">
+    {% csrf_token %}
+    <textarea name="comment_text" rows="4" cols="50"></textarea>
+    <input type="hidden" value={{m.id}} name="message_id">
+    <input type="submit" value="Post Comment">
+  </form>
+{% endfor %}
+</body>
+</html>
